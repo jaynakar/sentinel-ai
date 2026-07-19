@@ -1,0 +1,81 @@
+# -----------------------------
+# React / Vite
+# -----------------------------
+node_modules/
+dist/
+dist-ssr/
+vite.svg
+
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables
+.env
+.env.*
+
+# -----------------------------
+# Logs
+# -----------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------
+# IDEs
+# -----------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# -----------------------------
+# OS Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Jupyter
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# Build / Cache
+# -----------------------------
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+
+# -----------------------------
+# Temporary Files
+# -----------------------------
+*.tmp
+*.temp
+
+
+# Training datasets
+data/processed/X_train.csv
+data/processed/y_train.csv
+data/processed/X_test.csv
+data/processed/y_test.csv
+
+# Academic documents
+docs/MU Major Project-2_Report.pdf
+docs/Research_Paper_Updated.pdf
+docs/8PRO_030_PPT_92200103169.pptx
