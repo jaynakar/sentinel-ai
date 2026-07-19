@@ -1,39 +1,174 @@
-import { Upload, FileText } from "lucide-react";
+import { useState, useRef } from "react";
+import { Upload, FileText, CheckCircle } from "lucide-react";
+import sentinelLogo from "../../assets/sentinel-logo.png";
+import ProcessingPanel from "../processing/ProcessingPanel";
 
 
-export default function UploadCard() {
+export default function UploadCard({
+    appState,
+    setAppState,
+}) {
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleAnalyze = () => {
+      setAppState("processing");
+  };
+
+  if (appState === "processing") {
+      return (
+          <ProcessingPanel
+              onComplete={() => setAppState("results")}
+          />
+      );
+  }
+
+  if (appState === "results") {
+      return (
+          <section className="mt-8 rounded-2xl border border-green-500/20 bg-slate-900 p-10 text-center">
+              <CheckCircle
+                  size={64}
+                  className="mx-auto text-green-500"
+              />
+
+              <h2 className="mt-6 text-3xl font-bold">
+                  Analysis Complete
+              </h2>
+
+              <p className="mt-3 text-slate-400">
+                  Sentinel AI successfully analyzed your transaction dataset.
+              </p>
+          </section>
+      );
+  }
+
   return (
     <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
       <div className="text-center">
         <h2 className="text-2xl font-bold">
-          Upload Transaction Dataset
+          Analyze Transaction Dataset
         </h2>
 
         <p className="mt-2 text-slate-400">
-          Upload a CSV file to analyze transactions for potential fraud.
+          Upload a transaction dataset to detect fraudulent activity,
+          generate explainable predictions, and create an investigation report.
         </p>
       </div>
 
-      <div className="mt-8 rounded-xl border-2 border-dashed border-slate-700 bg-slate-950 p-8 transition hover:border-blue-500">
+      <div
+        className={`mt-8 rounded-xl border-2 border-dashed bg-slate-950 p-8 transition-all duration-300
+          ${
+            selectedFile
+              ? "border-slate-700"
+              : "border-slate-700 hover:border-blue-500"
+          }`}
+      >
         <div className="flex flex-col items-center">
-          <Upload size={48} className="text-blue-400" />
 
-          <h3 className="mt-4 text-xl font-semibold">
-            Drag & Drop CSV File
-          </h3>
+          {!selectedFile ? (
+            <>
 
-          <p className="mt-2 text-slate-400">
-            or click below to browse
-          </p>
+              <Upload size={48} className="text-blue-400" />
 
-          <button className="mt-6 rounded-lg bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-700">
-            Select CSV File
-          </button>
+              <h3 className="mt-4 text-xl font-semibold">
+                Drag & Drop CSV File
+              </h3>
 
-          <div className="mt-6 flex items-center gap-2 text-sm text-slate-500">
-            <FileText size={18} />
-            CSV files only
-          </div>
+              <p className="mt-2 text-slate-400">
+                or click below to browse
+              </p>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv"
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files.length > 0) {
+                    setSelectedFile(e.target.files[0]);
+                  }
+                }}
+              />
+
+              <button
+                onClick={() => fileInputRef.current.click()}
+                className="mt-6 rounded-lg bg-blue-600 px-6 py-3 font-semibold transition hover:bg-blue-700"
+              >
+                Select CSV File
+              </button>
+
+              <div className="mt-6 flex items-center gap-2 text-sm text-slate-500">
+                <FileText size={18} />
+                <span>CSV files only</span>
+              </div>
+
+            </>
+          ) : (
+            <>
+
+              <div className="relative mb-5 flex h-20 w-20 items-center justify-center">
+
+                  <div className="absolute inset-0 rounded-full bg-blue-500/70 blur-xl"></div>
+
+                  <div
+                    className="
+                    mb-6
+                    flex
+                    h-24
+                    w-24
+                    items-center
+                    justify-center
+                    rounded-full
+                    border
+                    border-slate-800
+                    bg-slate-900
+                    transition-all
+                    duration-500
+                    "
+                  >
+                    {/* Logo */}
+                    <img
+                      src={sentinelLogo}
+                      alt="Sentinel AI"
+                      className="h-14 w-auto"
+                    />
+                    
+                  </div>
+                        
+                  
+              </div>
+
+              <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">
+                {selectedFile.name}
+              </h3>
+
+              <p className="mt-1 text-sm text-slate-400">
+                CSV • {(selectedFile.size / 1024).toFixed(2)} KB
+              </p>
+
+              <p className="mt-5 flex items-center gap-2 rounded-full bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400">
+                <CheckCircle size={18} />
+                Ready for Analysis
+              </p>
+
+              <button
+                onClick={handleAnalyze}
+                className="mt-6 rounded-lg bg-blue-600 px-8 py-3 text-base font-semibold transition hover:bg-blue-700"
+              >
+                Analyze Dataset
+              </button>
+
+              <button
+                onClick={() => setSelectedFile(null)}
+                className="mt-3 text-sm text-slate-400 hover:text-white"
+              >
+                ↻ Choose Different File
+              </button>
+
+            </>
+          )}
+
         </div>
       </div>
     </section>

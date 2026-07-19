@@ -5,6 +5,8 @@ import {
   Settings,
   ShieldCheck,
 } from "lucide-react";
+import logo from "../../assets/sentinel-logo-horizontal.png";
+
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
@@ -15,20 +17,15 @@ const menuItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-80 bg-slate-900 border-r border-slate-800 flex flex-col">
-      <div className="flex items-center gap-3 px-6 py-8 border-b border-slate-800">
-        <div className="rounded-xl bg-blue-600 p-3">
-          <ShieldCheck size={28} />
-        </div>
+    <aside className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col">
+      <div className="flex justify-center items-center py-6 border-b border-slate-800">
 
         <div>
-            <h2 className="font-bold text-xl tracking-wide text-white">
-            HFDP
-            </h2>
-
-            <p className="text-slate-400 text-sm">
-            Hybrid Fraud Platform
-            </p>
+            <img
+                src={logo}
+                alt="Sentinel AI"
+                className="w-58 h-auto"
+            />
         </div>
       </div>
 

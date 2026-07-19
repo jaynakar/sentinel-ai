@@ -10,13 +10,20 @@ export default function Dashboard() {
     const [analysisData, setAnalysisData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [appState, setAppState] = useState("idle");
     
     return (
         <Layout>
         <div className="space-y-8 p-8">
             <Header />
-            <UploadCard />
-            <SummaryCards />
+            <UploadCard
+                appState={appState}
+                setAppState={setAppState}
+            />
+
+            <SummaryCards
+                appState={appState}
+            />
         </div>
         </Layout>
     );

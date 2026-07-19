@@ -5,11 +5,11 @@ export default function Header() {
     <header className="flex items-center justify-between rounded-2xl border border-slate-800 bg-slate-900 px-8 py-6">
       <div>
         <h1 className="text-3xl font-bold text-white">
-          Dashboard
+          Fraud Intelligence Dashboard
         </h1>
 
         <p className="mt-1 text-slate-400">
-          AI-powered Financial Fraud Detection Platform
+          Powered by Sentinel AI
         </p>
       </div>
 
