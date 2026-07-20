@@ -7,6 +7,7 @@ import ProcessingPanel from "../processing/ProcessingPanel";
 export default function UploadCard({
     appState,
     setAppState,
+    setAnalysisData,
 }) {
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -15,33 +16,6 @@ export default function UploadCard({
   const handleAnalyze = () => {
       setAppState("processing");
   };
-
-  if (appState === "processing") {
-      return (
-          <ProcessingPanel
-              onComplete={() => setAppState("results")}
-          />
-      );
-  }
-
-  if (appState === "results") {
-      return (
-          <section className="mt-8 rounded-2xl border border-green-500/20 bg-slate-900 p-10 text-center">
-              <CheckCircle
-                  size={64}
-                  className="mx-auto text-green-500"
-              />
-
-              <h2 className="mt-6 text-3xl font-bold">
-                  Analysis Complete
-              </h2>
-
-              <p className="mt-3 text-slate-400">
-                  Sentinel AI successfully analyzed your transaction dataset.
-              </p>
-          </section>
-      );
-  }
 
   return (
     <section className="mt-8 rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
@@ -57,16 +31,31 @@ export default function UploadCard({
       </div>
 
       <div
-        className={`mt-8 rounded-xl border-2 border-dashed bg-slate-950 p-8 transition-all duration-300
+        className={`mt-8 min-h-[420px] rounded-xl border-2 border-dashed bg-slate-950 p-8 transition-all duration-300
           ${
             selectedFile
               ? "border-slate-700"
               : "border-slate-700 hover:border-blue-500"
           }`}
       >
-        <div className="flex flex-col items-center">
+        <div className="flex min-h-[320px] flex-col items-center justify-center">
 
-          {!selectedFile ? (
+            {appState === "processing" ? (
+
+              <ProcessingPanel
+                onComplete={() => {
+                  setAnalysisData({
+                    transactionsProcessed: 1247,
+                    fraudAlerts: 18,
+                    highestRisk: 98.6,
+                    confidence: 99.2,
+                  });
+
+                  setAppState("results");
+                }}
+              />
+
+            ) : !selectedFile ? (
             <>
 
               <Upload size={48} className="text-blue-400" />
@@ -109,13 +98,13 @@ export default function UploadCard({
 
               <div className="relative mb-5 flex h-20 w-20 items-center justify-center">
 
-                  <div className="absolute inset-0 rounded-full bg-blue-500/70 blur-xl"></div>
+                  <div className="absolute inset-0 rounded-full bg-blue-500/80 blur-xl"></div>
 
                   <div
                     className="
-                    mb-6
+                    mb-1
                     flex
-                    h-24
+                    h-20
                     w-24
                     items-center
                     justify-center
@@ -147,16 +136,51 @@ export default function UploadCard({
                 CSV • {(selectedFile.size / 1024).toFixed(2)} KB
               </p>
 
-              <p className="mt-5 flex items-center gap-2 rounded-full bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400">
+              <p
+                className={`mt-5 flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
+                  appState === "results"
+                    ? "bg-blue-500/10 text-blue-400"
+                    : "bg-green-500/10 text-green-400"
+                }`}
+              >
                 <CheckCircle size={18} />
-                Ready for Analysis
+
+                {appState === "results"
+                  ? "Analysis Complete"
+                  : "Ready for Analysis"}
               </p>
 
+              {/* {appState === "results" && (
+                <p className="mt-4 max-w-md text-center text-sm text-slate-400">
+                  Your dataset has been analyzed successfully.
+                  Review the dashboard insights below or upload another dataset.
+                </p>
+              )} */}
+
               <button
-                onClick={handleAnalyze}
+                onClick={() => {
+
+                  if (appState === "results") {
+
+                    setSelectedFile(null);
+                    setAppState("idle");
+
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = "";
+                    }
+
+                  } else {
+
+                    handleAnalyze();
+
+                  }
+
+                }}
                 className="mt-6 rounded-lg bg-blue-600 px-8 py-3 text-base font-semibold transition hover:bg-blue-700"
               >
-                Analyze Dataset
+                {appState === "results"
+                    ? "Upload New Dataset"
+                    : "Analyze Dataset"}
               </button>
 
               <button

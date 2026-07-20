@@ -3,6 +3,7 @@ import Layout from "../components/common/Layout";
 import Header from "../components/common/Header";
 import UploadCard from "../components/upload/UploadCard";
 import SummaryCards from "../components/dashboard/SummaryCards";
+import AnalyticsSection from "../components/charts/AnalyticsSection";
 
 
 export default function Dashboard() {
@@ -19,10 +20,22 @@ export default function Dashboard() {
             <UploadCard
                 appState={appState}
                 setAppState={setAppState}
+                setAnalysisData={setAnalysisData}
             />
 
             <SummaryCards
                 appState={appState}
+                analysisData={analysisData}
+            />
+            <AnalyticsSection
+                // transactionsProcessed={
+                //     analysisData?.transactionsProcessed ?? 0
+                // }
+                // fraudAlerts={
+                //     analysisData?.fraudAlerts ?? 0
+                // }
+                transactionsProcessed={1247}
+                fraudAlerts={18}
             />
         </div>
         </Layout>

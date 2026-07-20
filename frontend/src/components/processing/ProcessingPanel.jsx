@@ -87,13 +87,13 @@ export default function ProcessingPanel({ onComplete }) {
     }, []);
 
     return (
-        <div className="mt-8 rounded-xl border border-slate-800 bg-slate-950 p-12">
+        <div className="w-full max-w-lg">
 
         <div className="flex flex-col items-center">
 
             <div className="relative">
 
-            <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-2xl animate-pulse"></div>
+            <div className="absolute inset-0 rounded-full bg-blue-500/60 blur-2xl animate-pulse"></div>
 
             <img
                 src={sentinelLogo}
@@ -103,35 +103,33 @@ export default function ProcessingPanel({ onComplete }) {
 
             </div>
 
-            <h2 className="mt-6 text-2xl font-bold">
+            <h2 className="mt-4 text-2xl font-bold">
             Sentinel AI Core
             </h2>
 
-            <p className="mt-2 text-slate-400">
-            {stages[currentStage].title}
+            <div className="mt-2 text-slate-400">
+                <p>{stages[currentStage].title}</p>
+
                 <div className="mt-8 w-full max-w-md">
 
-                <div className="mb-3 flex justify-between text-xs uppercase tracking-wider text-slate-500">
+                    <div className="mb-3 flex justify-between text-xs uppercase tracking-wider text-slate-500">
                     <span>Progress</span>
                     <span>{progress}%</span>
-                </div>
-                
+                    </div>
 
-                <div className="h-2 overflow-hidden rounded-full bg-slate-800">
-
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-800">
                     <div
-                    className="h-full rounded-full bg-blue-500 transition-all duration-700"
-                    style={{ width: `${progress}%` }}
-                    ></div>
+                        className="h-full rounded-full bg-blue-500 transition-all duration-700"
+                        style={{ width: `${progress}%` }}
+                    />
+                    </div>
 
-                </div>
-
-                <p className="mt-6 text-sm text-slate-400">
+                    <p className="mt-6 text-sm text-slate-400">
                     {stages[currentStage].detail}
-                </p>
+                    </p>
 
                 </div>
-            </p>
+            </div>
 
         </div>
 
